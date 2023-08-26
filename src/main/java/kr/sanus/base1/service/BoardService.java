@@ -1,6 +1,7 @@
 package kr.sanus.base1.service;
 
 import kr.sanus.base1.dto.BoardDTO;
+import kr.sanus.base1.dto.PagingDTO;
 import kr.sanus.base1.entity.Board;
 import kr.sanus.base1.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,17 +23,31 @@ public class BoardService {
 
     @Transactional
     public void add(BoardDTO boardDTO, HttpSession session) {
-        String userId = Optional.ofNullable((String) session.getAttribute("id"))
-                .orElse("guest");
+        String userId;
+
+        if (session != null) {
+            userId = Optional.ofNullable((String) session.getAttribute("id"))
+                    .orElse("guest");
+        } else {
+            userId = "guest";
+        }
 
         Board board = new Board(null, boardDTO.getTitle(), boardDTO.getContent(), userId, LocalDateTime.now());
 
         boardMapper.save(board);
     }
 
-    public List<BoardDTO> findAll() {
-        return boardMapper.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
+    public List<BoardDTO> findAll(PagingDTO pagingDTO) {
+        int offset = (pagingDTO.getPage() - 1) * pagingDTO.getSize();
+        List<Board> boards = boardMapper.findAll(offset, pagingDTO.getSize());
+        return boards.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
+
+
+    public int getTotalCount() {
+        return boardMapper.getTotalCount();
+    }
+
 
     public BoardDTO findById(long id) {
         return convertToDTO(findBoardById(id));

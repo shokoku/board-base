@@ -11,6 +11,8 @@
 <h2 class="text-center">글 상세</h2>
 <div class="container">
     <form:form action="${board.id}/edit"  method="get">
+        <input type="hidden" name="page" value="${page}">
+        <input type="hidden" name="size" value="${size}">
 
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="writer" name="writer" value="${board.writer}" placeholder="작성자" disabled>
@@ -37,11 +39,11 @@
             </div>
 
             <div class="col">
-                <button type="button" onclick="location.href='/board';" class="btn btn-lg btn-secondary w-100">목록</button>
+                <button type="button" onclick="location.href='/board?page=${page}&size=${size}';" class="btn btn-lg btn-secondary w-100">목록</button>
             </div>
 
             <div class="col">
-                <button type="button" onclick="location.href='${board.id}/delete';" class="btn btn-lg btn-danger w-100">삭제</button>
+                <button type="button" onclick="location.href='${board.id}/delete?page=${page}&size=${size}';" class="btn btn-lg btn-danger w-100">삭제</button>
             </div>
 
         </div>

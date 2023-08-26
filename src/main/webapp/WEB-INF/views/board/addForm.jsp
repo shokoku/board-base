@@ -11,6 +11,7 @@
 <h2 class="text-center">글 쓰기</h2>
 <div class="container">
     <form:form action="" method="post">
+        <input type="hidden" name="size" value="${size}">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="title" name="title" placeholder="제목">
             <label for="title">제목</label>

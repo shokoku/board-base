@@ -8,7 +8,14 @@
     </insert>
 
     <select id="findAll" resultType="kr.sanus.base1.entity.Board">
-        SELECT * FROM board ORDER BY id DESC
+        SELECT * FROM board
+        ORDER BY id DESC
+        LIMIT #{offset}, #{size}
+    </select>
+
+
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM board
     </select>
 
     <select id="findById" resultType="kr.sanus.base1.entity.Board">

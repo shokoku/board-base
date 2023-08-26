@@ -11,6 +11,8 @@
 <h2 class="text-center">글 수정</h2>
 <div class="container">
     <form:form action="" method="post">
+        <input type="hidden" name="page" value="${page}">
+        <input type="hidden" name="size" value="${size}">
 
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="writer" name="writer" value="${board.writer}" placeholder="작성자" disabled>
@@ -36,7 +38,7 @@
                 <button type="submit" class="btn btn-primary btn-lg w-100">저장</button>
             </div>
             <div class="col">
-                <button type="button" onclick="location.href='/board/${board.id}';" class="btn btn-secondary btn-lg w-100">취소</button>
+                <button type="button" onclick="location.href='/board/${board.id}?page=${page}&size=${size}';" class="btn btn-secondary btn-lg w-100">취소</button>
             </div>
         </div>
 
