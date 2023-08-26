@@ -15,7 +15,7 @@
 <body>
 <h2 class="text-center">회원 정보</h2>
 <div class="container">
-    <form:form action="/user/edit/${sessionScope.id}" modelAttribute="user" method="post">
+    <form:form action="" modelAttribute="user" method="post">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="id" name="id" value="${user.id}" placeholder="아이디" disabled>
             <label for="id">아이디</label>

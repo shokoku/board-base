@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>회원 가입</title>
+    <title>Base</title>
     <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css">
 </head>
 <body>
@@ -16,27 +16,32 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <!-- 로그인이 안된 경우 -->
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="board">게시판</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <c:if test="${empty sessionScope.id}">
                 <li class="nav-item">
-                    <a class="nav-link" href="/user/join">회원가입</a>
+                    <a class="nav-link" href="user/join">회원가입</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user/login">로그인</a>
+                    <a class="nav-link" href="user/login">로그인</a>
                 </li>
             </c:if>
 
-            <!-- 로그인이 된 경우 -->
             <c:if test="${not empty sessionScope.id}">
                 <li class="nav-item">
                     <a class="nav-link">${sessionScope.id}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user/info/${sessionScope.id}">회원정보</a>
+                    <a class="nav-link" href="user/${sessionScope.id}">회원정보</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user/logout">로그아웃</a>
+                    <a class="nav-link" href="user/logout">로그아웃</a>
                 </li>
             </c:if>
         </ul>

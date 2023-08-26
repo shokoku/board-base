@@ -15,7 +15,7 @@
 <body>
 <h2 class="text-center">로그인</h2>
 <div class="container">
-    <form:form action="/user/login" modelAttribute="user" method="post">
+    <form:form action="" modelAttribute="user" method="post">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="id" name="id" placeholder="아이디">
             <label for="id">아이디</label>

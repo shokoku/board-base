@@ -50,24 +50,24 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/info/{id}")
+    @GetMapping("/{id}")
     public String info(@PathVariable String id, Model model) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         return "user/info";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/{id}/edit")
     public String editForm(@PathVariable String id, Model model) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         return "user/editForm";
     }
 
-    @PostMapping("/edit/{id}")
+    @PostMapping("/{id}/edit")
     public String edit(@ModelAttribute User user) {
         userService.update(user);
-        return "redirect:/user/list";
+        return "redirect:/";
     }
 
 }
