@@ -35,6 +35,33 @@
             <textarea class="form-control" id="content" name="content" placeholder="비밀번호">${board.content}</textarea>
             <label for="content">내용</label>
         </div>
+
+        <div class="form-floating mb-3">
+            <select class="form-control" id="category" name="category">
+                <option value="NEWS" ${board.category == 'NEWS' ? 'selected' : ''}>뉴스</option>
+                <option value="EVENT" ${board.category == 'EVENT' ? 'selected' : ''}>이벤트</option>
+                <option value="NOTICE" ${board.category == 'NOTICE' ? 'selected' : ''}>공지</option>
+            </select>
+            <label for="category">카테고리</label>
+        </div>
+
+        <div class="mb-3">
+            <input type="checkbox" class="form-check-input" id="secret" name="secret" ${board.secret ? 'checked' : ''}>
+            <label class="form-check-label" for="secret">비밀글 설정</label>
+        </div>
+
+        <div class="mb-3">
+            <label>중요도</label><br>
+            <input type="radio" name="importance" value="LOW" id="low" ${board.importance == 'LOW' ? 'checked' : ''}>
+            <label for="low">낮음</label>
+
+            <input type="radio" name="importance" value="MEDIUM" id="medium" ${board.importance == 'MEDIUM' ? 'checked' : ''}>
+            <label for="medium">보통</label>
+
+            <input type="radio" name="importance" value="HIGH" id="high" ${board.importance == 'HIGH' ? 'checked' : ''}>
+            <label for="high">높음</label>
+        </div>
+
         <div class="row">
             <div class="col">
                 <button type="submit" class="btn btn-primary btn-lg w-100">저장</button>

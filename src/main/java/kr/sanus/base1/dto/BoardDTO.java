@@ -15,5 +15,8 @@ public class BoardDTO {
     private String content;
     private String writer;
     private LocalDateTime createdDate;
+    private boolean secret;
+    private Category category;
+    private Importance importance;
 
 }

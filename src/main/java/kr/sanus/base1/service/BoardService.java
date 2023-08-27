@@ -26,7 +26,7 @@ public class BoardService {
                 .map(s -> (String) s.getAttribute("id"))
                 .orElse("guest");
 
-        Board board = new Board(null, boardDTO.getTitle(), boardDTO.getContent(), userId);
+        Board board = new Board(null, boardDTO.getTitle(), boardDTO.getContent(), userId, boardDTO.isSecret(), boardDTO.getCategory(), boardDTO.getImportance());
         boardMapper.save(board);
         return board.getId();
     }
@@ -49,7 +49,7 @@ public class BoardService {
     @Transactional
     public void edit(Long id, BoardDTO boardDTO) {
         Board board = findBoardById(id);
-        board.update(boardDTO.getTitle(), boardDTO.getContent());
+        board.update(boardDTO.getTitle(), boardDTO.getContent(), boardDTO.isSecret(), boardDTO.getCategory(), boardDTO.getImportance());
         boardMapper.update(board);
     }
 
@@ -70,6 +70,9 @@ public class BoardService {
                 .content(board.getContent())
                 .writer(board.getWriter())
                 .createdDate(board.getCreatedDate())
+                .secret(board.isSecret())
+                .category(board.getCategory())
+                .importance(board.getImportance())
                 .build();
     }
 }

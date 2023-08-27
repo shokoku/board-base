@@ -16,3 +16,12 @@ CREATE TABLE boardDTO (
                        created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
                        FOREIGN KEY (writer) REFERENCES user(id)
 );
+
+-- secret 컬럼 추가 (boolean 타입)
+ALTER TABLE board ADD secret BOOLEAN DEFAULT FALSE;
+
+-- category 컬럼 추가 (varchar 타입)
+ALTER TABLE board ADD category VARCHAR(255);
+
+-- importance 컬럼 추가 (varchar 타입)
+ALTER TABLE board ADD importance VARCHAR(255);

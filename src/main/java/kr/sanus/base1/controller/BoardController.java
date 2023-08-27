@@ -41,6 +41,7 @@ public class BoardController {
                       @RequestParam(defaultValue = "") String keyword,
                       HttpSession session) {
         long id = boardService.add(boardDTO, session);
+        System.out.println("boardDTO = " + boardDTO);
         return "redirect:/board/" +id + "/?page=" + page + "&size=" + size + "&type=" + type + "&keyword=" + keyword;
     }
 
