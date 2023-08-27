@@ -9,46 +9,54 @@
     <title>글 목록</title>
     <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css">
     <style>
-        table th:nth-child(1) {
-            width: 10%;
-        }
-
-        table th:nth-child(2) {
-            width: 50%;
-        }
-
-        table th:nth-child(3), table th:nth-child(4) {
-            width: 20%;
-        }
         table th, table td {
             text-align: center;
             vertical-align: middle;
         }
 
-        table td:nth-child(2) {
-            text-align: left;
-            padding-left: 2em;
-        }
+        table th:nth-child(1) { width: 10%; }
+        table th:nth-child(2) { width: 50%; text-align: left; padding-left: 2em; }
+        table th:nth-child(3), table th:nth-child(4) { width: 20%; }
 
         a, a:hover {
             text-decoration: none;
             color: black;
+        }
+
+        .dropdown-section{
+            width: 120px;
+        }
+
+        .searchForm {
+            max-width: 580px;
+        }
+
+        .searchSelect {
+            max-width: 150px;
         }
     </style>
 </head>
 <body>
 <h2 class="text-center">글 목록</h2>
 <div class="container">
-    <div class="w-25">
-        <form method="get" action="">
-            <input type="hidden" name="page" value="1" />
-            <select name="size" onchange="this.form.submit()" class="form-select form-select-sm">
-                <option value="10" ${pagingDTO.size == 10 ? 'selected' : ''}>10개씩 보기</option>
-                <option value="15" ${pagingDTO.size == 15 ? 'selected' : ''}>15개씩 보기</option>
-                <option value="20" ${pagingDTO.size == 20 ? 'selected' : ''}>20개씩 보기</option>
-                <option value="30" ${pagingDTO.size == 30 ? 'selected' : ''}>30개씩 보기</option>
-            </select>
-        </form>
+    <div class="d-flex justify-content-between">
+        <div>
+            총 ${pagingDTO.totalElements}건
+        </div>
+
+        <div class="dropdown-section">
+            <form method="get" action="">
+                <c:set var="selectedSize" value="${param.size}" />
+                <input type="hidden" name="page" value="1" />
+                <input type="hidden" name="type" value="${param.type}" />
+                <input type="hidden" name="keyword" value="${param.keyword}" />
+                <select name="size" onchange="this.form.submit()" class="form-select form-select-sm">
+                    <c:forEach var="sizeOption" items="10,15,20,30">
+                        <option value="${sizeOption}" ${sizeOption == selectedSize ? 'selected' : ''}>${sizeOption}개씩 보기</option>
+                    </c:forEach>
+                </select>
+            </form>
+        </div>
     </div>
 
     <table class="table">
@@ -60,14 +68,11 @@
             <th>작성일</th>
         </tr>
         </thead>
-
         <tbody>
         <c:forEach var="board" items="${boards}" varStatus="status">
             <tr>
                 <td>${pagingDTO.totalElements - (pagingDTO.page - 1) * pagingDTO.size - status.index}</td>
-                <td>
-                    <a href="board/${board.id}?page=${pagingDTO.page}&size=${pagingDTO.size}">${board.title}</a>
-                </td>
+                <td><a href="board/${board.id}?page=${param.page}&size=${param.size}&type=${param.type}&keyword=${param.keyword}">${board.title}</a></td>
                 <td>${board.writer}</td>
                 <fmt:parseDate var="parsedDate" value="${board.createdDate}" pattern="yyyy-MM-dd'T'HH:mm" />
                 <td><fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd" /></td>
@@ -76,49 +81,61 @@
         </tbody>
     </table>
 
-    <div class="container">
+    <!-- Search Form -->
+    <div class="container searchForm">
+        <form method="get" action="">
+            <input type="hidden" name="page" value="1" />
+            <input type="hidden" name="size" value="${param.size}" />
+
+            <div class="input-group">
+                <select name="type" class="form-select searchSelect">
+                    <option value="title" ${param.type == 'title' ? 'selected' : ''}>제목</option>
+                    <option value="content" ${param.type == 'content' ? 'selected' : ''}>내용</option>
+                    <option value="writer" ${param.type == 'writer' ? 'selected' : ''}>작성자</option>
+                </select>
+                <input type="text" name="keyword" value="${param.keyword}" placeholder="검색어를 입력하세요" class="form-control">
+                <button type="submit" class="btn btn-primary">검색</button>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- Pagination -->
+    <div class="pagination-section">
         <ul class="pagination justify-content-center">
-            <!-- 이전 페이지 그룹 버튼 -->
             <c:if test="${pagingDTO.hasPreviousGroup()}">
                 <li class="page-item">
-                    <a class="page-link" href="?page=${pagingDTO.getPreviousGroupStartPage()}&size=${pagingDTO.size}" aria-label="Previous Group">
+                    <a class="page-link" href="?page=${pagingDTO.getPreviousGroupStartPage()}&size=${param.size}&type=${param.type}&keyword=${param.keyword}" aria-label="Previous Group">
                         <span aria-hidden="true">&laquo;&laquo;</span>
                     </a>
                 </li>
             </c:if>
 
-            <!-- 페이지 번호 -->
             <c:forEach begin="${pagingDTO.startPageGroup}" end="${pagingDTO.endPageGroup}" var="pageNum">
                 <c:choose>
-                    <c:when test="${pageNum == pagingDTO.page}">
-                        <li class="page-item active">
-                            <span class="page-link">${pageNum}</span>
-                        </li>
+                    <c:when test="${pageNum == param.page}">
+                        <li class="page-item active"><span class="page-link">${pageNum}</span></li>
                     </c:when>
                     <c:otherwise>
                         <li class="page-item">
-                            <a class="page-link" href="?page=${pageNum}&size=${pagingDTO.size}">${pageNum}</a>
+                            <a class="page-link" href="?page=${pageNum}&size=${param.size}&type=${param.type}&keyword=${param.keyword}">${pageNum}</a>
                         </li>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
 
-            <!-- 다음 페이지 그룹 버튼 -->
             <c:if test="${pagingDTO.hasNextGroup()}">
                 <li class="page-item">
-                    <a class="page-link" href="?page=${pagingDTO.getNextGroupStartPage()}&size=${pagingDTO.size}" aria-label="Next Group">
+                    <a class="page-link" href="?page=${pagingDTO.getNextGroupStartPage()}&size=${param.size}&type=${param.type}&keyword=${param.keyword}" aria-label="Next Group">
                         <span aria-hidden="true">&raquo;&raquo;</span>
                     </a>
                 </li>
             </c:if>
-
         </ul>
     </div>
 
-
-
-    <div class="m-auto">
-        <button type="button" onclick="location.href='board/add?page=${pagingDTO.page}&size=${pagingDTO.size}';" class="btn btn-lg btn-primary w-100">글쓰기</button>
+    <div class="btn-section m-auto">
+        <button type="button" onclick="location.href='board/add?page=${param.page}&size=${param.size}&type=${param.type}&keyword=${param.keyword}';" class="btn btn-lg btn-primary w-100">글쓰기</button>
     </div>
 </div>
 </body>

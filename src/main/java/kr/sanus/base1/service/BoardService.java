@@ -1,7 +1,7 @@
 package kr.sanus.base1.service;
 
 import kr.sanus.base1.dto.BoardDTO;
-import kr.sanus.base1.dto.PagingDTO;
+import kr.sanus.base1.dto.SearchCriteriaDTO;
 import kr.sanus.base1.entity.Board;
 import kr.sanus.base1.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class BoardService {
     private final BoardMapper boardMapper;
 
     @Transactional
-    public void add(BoardDTO boardDTO, HttpSession session) {
+    public long add(BoardDTO boardDTO, HttpSession session) {
         String userId;
 
         if (session != null) {
@@ -35,17 +35,17 @@ public class BoardService {
         Board board = new Board(null, boardDTO.getTitle(), boardDTO.getContent(), userId, LocalDateTime.now());
 
         boardMapper.save(board);
+        return board.getId();
     }
 
-    public List<BoardDTO> findAll(PagingDTO pagingDTO) {
-        int offset = (pagingDTO.getPage() - 1) * pagingDTO.getSize();
-        List<Board> boards = boardMapper.findAll(offset, pagingDTO.getSize());
+    public List<BoardDTO> findAll(SearchCriteriaDTO searchCriteriaDTO) {
+        int offset = (searchCriteriaDTO.getPagingInfo().getPage() - 1) * searchCriteriaDTO.getPagingInfo().getSize();
+        List<Board> boards = boardMapper.findAll(offset, searchCriteriaDTO.getPagingInfo().getSize(), searchCriteriaDTO.getType(), searchCriteriaDTO.getKeyword());
         return boards.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-
-    public int getTotalCount() {
-        return boardMapper.getTotalCount();
+    public int getTotalCount(String type, String keyword) {
+        return boardMapper.getTotalCount(type, keyword);
     }
 
 

@@ -13,7 +13,9 @@ public interface BoardMapper {
 
     List<Board> findAll(@Param("offset") int offset, @Param("size") int size);
 
-    int getTotalCount();
+    List<Board> findAll(@Param("offset") int offset, @Param("size") int size, @Param("type") String type, @Param("keyword") String keyword);
+
+    int getTotalCount(@Param("type") String type, @Param("keyword") String keyword);
 
     Optional<Board> findById(long id);
 

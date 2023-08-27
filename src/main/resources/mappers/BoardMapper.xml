@@ -8,14 +8,39 @@
     </insert>
 
     <select id="findAll" resultType="kr.sanus.base1.entity.Board">
-        SELECT * FROM board
+        SELECT *
+        FROM board
+        WHERE 1 = 1
+        <choose>
+            <when test="type == 'title'">
+                AND title LIKE CONCAT('%', #{keyword, jdbcType=VARCHAR}, '%')
+            </when>
+            <when test="type == 'content'">
+                AND content LIKE CONCAT('%', #{keyword, jdbcType=VARCHAR}, '%')
+            </when>
+            <when test="type == 'writer'">
+                AND writer LIKE CONCAT('%', #{keyword, jdbcType=VARCHAR}, '%')
+            </when>
+        </choose>
         ORDER BY id DESC
-        LIMIT #{offset}, #{size}
+        LIMIT #{offset, jdbcType=INTEGER}, #{size, jdbcType=INTEGER}
     </select>
 
 
     <select id="getTotalCount" resultType="int">
         SELECT COUNT(*) FROM board
+        WHERE 1 = 1
+        <choose>
+            <when test="type == 'title'">
+                AND title LIKE CONCAT('%', #{keyword, jdbcType=VARCHAR}, '%')
+            </when>
+            <when test="type == 'content'">
+                AND content LIKE CONCAT('%', #{keyword, jdbcType=VARCHAR}, '%')
+            </when>
+            <when test="type == 'writer'">
+                AND writer LIKE CONCAT('%', #{keyword, jdbcType=VARCHAR}, '%')
+            </when>
+        </choose>
     </select>
 
     <select id="findById" resultType="kr.sanus.base1.entity.Board">
