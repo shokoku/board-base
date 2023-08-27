@@ -1,4 +1,4 @@
-package kr.sanus.base1.dto;
+package kr.sanus.base1.entity;
 
 import lombok.Getter;
 import lombok.Setter;

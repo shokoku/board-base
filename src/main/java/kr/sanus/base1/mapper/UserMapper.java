@@ -1,11 +1,9 @@
 package kr.sanus.base1.mapper;
 
 
-import kr.sanus.base1.dto.User;
+import kr.sanus.base1.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 @Mapper
 public interface UserMapper {

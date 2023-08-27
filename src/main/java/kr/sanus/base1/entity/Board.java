@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 public class Board {
 
@@ -18,6 +17,14 @@ public class Board {
     private String content;
     private String writer;
     private LocalDateTime createdDate;
+
+    public Board(Long id, String title, String content, String writer) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+        this.createdDate = LocalDateTime.now();
+    }
 
     public void update(String title, String content) {
         this.title = title;

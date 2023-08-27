@@ -3,7 +3,7 @@
 
 <mapper namespace="kr.sanus.base1.mapper.UserMapper">
 
-    <insert id="save" parameterType="kr.sanus.base1.dto.User">
+    <insert id="save" parameterType="kr.sanus.base1.entity.User">
         INSERT INTO user (id, pw, name, phone, email) VALUES (#{id}, #{pw}, #{name}, #{phone}, #{email})
     </insert>
 
@@ -11,11 +11,11 @@
         SELECT COUNT(*) > 0 FROM user WHERE id=#{id} AND pw=#{pw}
     </select>
 
-    <select id="findById" resultType="kr.sanus.base1.dto.User">
+    <select id="findById" resultType="kr.sanus.base1.entity.User">
         SELECT * FROM user WHERE id = #{id}
     </select>
 
-    <update id="update" parameterType="kr.sanus.base1.dto.User">
+    <update id="update" parameterType="kr.sanus.base1.entity.User">
         UPDATE user SET pw=#{pw}, name=#{name}, phone=#{phone}, email=#{email} WHERE id = #{id}
     </update>
 

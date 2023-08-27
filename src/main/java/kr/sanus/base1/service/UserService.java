@@ -1,6 +1,6 @@
 package kr.sanus.base1.service;
 
-import kr.sanus.base1.dto.User;
+import kr.sanus.base1.entity.User;
 import kr.sanus.base1.exception.DuplicateUserIdException;
 import kr.sanus.base1.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;

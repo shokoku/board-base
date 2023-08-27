@@ -45,11 +45,11 @@ public class PagingDTO {
         return endPageGroup < totalPages;
     }
 
-    public int getPreviousGroupStartPage() {
+    public int previousGroupStartPage() {
         return startPageGroup - PAGES_PER_GROUP;
     }
 
-    public int getNextGroupStartPage() {
+    public int nextGroupStartPage() {
         return endPageGroup + 1;
     }
 }

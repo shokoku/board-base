@@ -8,34 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>글 목록</title>
     <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css">
-    <style>
-        table th, table td {
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        table th:nth-child(1) { width: 10%; }
-        table th:nth-child(2) { width: 50%; text-align: left; padding-left: 2em; }
-        table th:nth-child(3), table th:nth-child(4) { width: 20%; }
-
-        a, a:hover {
-            text-decoration: none;
-            color: black;
-        }
-
-        .dropdown-section{
-            width: 120px;
-        }
-
-        .searchForm {
-            max-width: 580px;
-        }
-
-        .searchSelect {
-            max-width: 150px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/resources/css/list.css">
 </head>
+
 <body>
 <h2 class="text-center">글 목록</h2>
 <div class="container">
@@ -105,7 +80,7 @@
         <ul class="pagination justify-content-center">
             <c:if test="${pagingDTO.hasPreviousGroup()}">
                 <li class="page-item">
-                    <a class="page-link" href="?page=${pagingDTO.getPreviousGroupStartPage()}&size=${param.size}&type=${param.type}&keyword=${param.keyword}" aria-label="Previous Group">
+                    <a class="page-link" href="?page=${pagingDTO.previousGroupStartPage()}&size=${param.size}&type=${param.type}&keyword=${param.keyword}" aria-label="Previous Group">
                         <span aria-hidden="true">&laquo;&laquo;</span>
                     </a>
                 </li>
@@ -126,7 +101,7 @@
 
             <c:if test="${pagingDTO.hasNextGroup()}">
                 <li class="page-item">
-                    <a class="page-link" href="?page=${pagingDTO.getNextGroupStartPage()}&size=${param.size}&type=${param.type}&keyword=${param.keyword}" aria-label="Next Group">
+                    <a class="page-link" href="?page=${pagingDTO.nextGroupStartPage()}&size=${param.size}&type=${param.type}&keyword=${param.keyword}" aria-label="Next Group">
                         <span aria-hidden="true">&raquo;&raquo;</span>
                     </a>
                 </li>

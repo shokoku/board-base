@@ -1,6 +1,6 @@
 package kr.sanus.base1.controller;
 
-import kr.sanus.base1.dto.User;
+import kr.sanus.base1.entity.User;
 import kr.sanus.base1.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor

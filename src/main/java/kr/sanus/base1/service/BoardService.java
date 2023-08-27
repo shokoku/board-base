@@ -3,15 +3,14 @@ package kr.sanus.base1.service;
 import kr.sanus.base1.dto.BoardDTO;
 import kr.sanus.base1.dto.SearchCriteriaDTO;
 import kr.sanus.base1.entity.Board;
+import kr.sanus.base1.exception.BoardNotFoundException;
 import kr.sanus.base1.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -23,17 +22,11 @@ public class BoardService {
 
     @Transactional
     public long add(BoardDTO boardDTO, HttpSession session) {
-        String userId;
+        String userId = Optional.ofNullable(session)
+                .map(s -> (String) s.getAttribute("id"))
+                .orElse("guest");
 
-        if (session != null) {
-            userId = Optional.ofNullable((String) session.getAttribute("id"))
-                    .orElse("guest");
-        } else {
-            userId = "guest";
-        }
-
-        Board board = new Board(null, boardDTO.getTitle(), boardDTO.getContent(), userId, LocalDateTime.now());
-
+        Board board = new Board(null, boardDTO.getTitle(), boardDTO.getContent(), userId);
         boardMapper.save(board);
         return board.getId();
     }
@@ -67,7 +60,7 @@ public class BoardService {
 
     private Board findBoardById(long id) {
         return boardMapper.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No Board found with ID " + id));
+                .orElseThrow(() -> new BoardNotFoundException("No Board found with ID " + id));
     }
 
     private BoardDTO convertToDTO(Board board) {
